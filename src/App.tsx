@@ -329,17 +329,21 @@ function ArchitectureSimulator() {
           top: '50%',
           transform: 'translate(-50%, -50%)', 
           zIndex: 100, 
-          background: '#0d111e',
-          border: '1px solid rgba(255,255,255,0.1)', 
-          color: 'white',
-          width: '32px', height: '32px', borderRadius: '0 50% 50% 0', cursor: 'pointer',
+          background: 'rgba(13, 17, 30, 0.8)',
+          backdropFilter: 'blur(12px)',
+          border: '1px solid rgba(255, 255, 255, 0.1)', 
+          color: '#45f3ff',
+          width: '28px', height: '60px', 
+          borderRadius: '0 8px 8px 0', cursor: 'pointer',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', 
-          boxShadow: '4px 0 12px rgba(0,0,0,0.5)',
-          paddingLeft: '4px'
+          boxShadow: '4px 0 15px rgba(0,0,0,0.3)',
+          paddingLeft: '2px'
         }}
+        onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(69, 243, 255, 0.15)')}
+        onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(13, 17, 30, 0.8)')}
       >
-        {isCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
+        {isCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
       </button>
 
       {/* Architect's Insight - Side Pop-up (Scrollable Drawer) */}
@@ -426,17 +430,21 @@ function ArchitectureSimulator() {
           top: '50%',
           transform: 'translate(50%, -50%)', 
           zIndex: 100, 
-          background: '#0d111e',
-          border: '1px solid rgba(255,255,255,0.1)', 
-          color: 'white',
-          width: '32px', height: '32px', borderRadius: '50% 0 0 50%', cursor: 'pointer',
+          background: 'rgba(13, 17, 30, 0.8)',
+          backdropFilter: 'blur(12px)',
+          border: '1px solid rgba(255, 255, 255, 0.1)', 
+          color: '#ff9900',
+          width: '28px', height: '60px', 
+          borderRadius: '8px 0 0 8px', cursor: 'pointer',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', 
-          boxShadow: '-4px 0 12px rgba(0,0,0,0.5)',
-          paddingRight: '4px'
+          boxShadow: '-4px 0 15px rgba(0,0,0,0.3)',
+          paddingRight: '2px'
         }}
+        onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255, 153, 0, 0.15)')}
+        onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(13, 17, 30, 0.8)')}
       >
-        {isRightCollapsed ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
+        {isRightCollapsed ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
       </button>
 
 
