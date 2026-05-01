@@ -1,0 +1,307 @@
+.app-wrapper {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+
+.flow-container {
+  flex-grow: 1;
+  height: 100%;
+}
+
+.sidebar {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  width: 250px;
+  padding: 1rem;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+}
+
+.sidebar-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--accent-color);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.service-node {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: grab;
+  transition: all 0.2s ease;
+}
+
+.service-node:hover {
+  background: rgba(255, 153, 0, 0.1);
+  border-color: var(--accent-color);
+}
+
+.service-node:active {
+  cursor: grabbing;
+}
+
+.cost-panel {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 300px;
+  padding: 1.5rem;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+}
+
+.cost-total {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #4cd137;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.cost-total span {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.cost-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.9rem;
+}
+
+.cost-item:last-child {
+  border-bottom: none;
+}
+
+.custom-node {
+  padding: 1rem;
+  border-radius: 8px;
+  background: var(--panel-bg);
+  border: 2px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-width: 120px;
+  color: var(--text-primary);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+  overflow: visible; /* required so tooltip is not clipped */
+}
+
+/* definitive fix for node underlapping on hover */
+.react-flow__node:hover {
+  z-index: 10000 !important;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateX(-50%) translateY(6px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.custom-node.selected {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 15px rgba(255, 153, 0, 0.4);
+}
+
+.node-icon {
+  color: var(--accent-color);
+}
+
+.node-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.node-cost {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  margin-top: -0.25rem;
+}
+
+.node-delete-btn {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.custom-node:hover .node-delete-btn {
+  opacity: 1;
+}
+
+.node-delete-btn:hover {
+  color: #ff4757;
+  border-color: #ff4757;
+  transform: scale(1.1);
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal-content {
+  background: var(--panel-bg);
+  border: 1px solid var(--accent-color);
+  border-radius: 12px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 0 40px rgba(255, 153, 0, 0.15);
+}
+
+/* ── ReactFlow Controls override ────────────────────────── */
+.react-flow__controls {
+  box-shadow: none !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+.react-flow__controls-button {
+  background: rgba(20, 26, 45, 0.9) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 7px !important;
+  color: #c0c8d8 !important;
+  fill: #c0c8d8 !important;
+  width: 32px !important;
+  height: 32px !important;
+  padding: 6px !important;
+  transition: all 0.15s ease !important;
+}
+
+.react-flow__controls-button:hover {
+  background: rgba(255, 153, 0, 0.15) !important;
+  border-color: rgba(255, 153, 0, 0.5) !important;
+  color: #ff9900 !important;
+  fill: #ff9900 !important;
+}
+
+.react-flow__controls-button svg {
+  fill: inherit !important;
+  max-width: 14px !important;
+  max-height: 14px !important;
+}
+
+/* Hide the React Flow attribution link */
+.react-flow__attribution {
+  display: none !important;
+}
+/* ── Architectural Print Engine ── */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    overflow: visible !important;
+  }
+
+  /* Hide everything except the report */
+  .app-wrapper > *:not(.report-modal-overlay),
+  .no-print,
+  .report-modal-overlay > *:not(#architectural-report) {
+    display: none !important;
+  }
+
+  .report-modal-overlay {
+    position: static !important;
+    display: block !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    padding: 0 !important;
+  }
+
+  #architectural-report {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: auto !important;
+    max-height: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: white !important;
+    color: black !important;
+    margin: 0 !important;
+    transform: none !important;
+    overflow: visible !important;
+  }
+
+  /* Style adjustments for print */
+  #architectural-report h2, 
+  #architectural-report h3,
+  #architectural-report span {
+    color: black !important;
+  }
+
+  #architectural-report p {
+    color: #444 !important;
+  }
+
+  #architectural-report > div {
+    background: transparent !important;
+    border-color: #eee !important;
+  }
+
+  #architectural-report [style*="rgba(255,255,255,0.02)"] {
+    background: #f9f9f9 !important;
+    border: 1px solid #ddd !important;
+  }
+
+  #architectural-report [style*="color: white"] {
+    color: black !important;
+  }
+
+  #architectural-report svg {
+    filter: invert(1) !important;
+  }
+}

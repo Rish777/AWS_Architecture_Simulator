@@ -1,0 +1,33 @@
+@import '@xyflow/react/dist/style.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg-color: #0f111a;
+  --panel-bg: rgba(20, 22, 33, 0.85);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --text-primary: #f0f0f0;
+  --text-secondary: #a0a0a0;
+  --accent-color: #ff9900; /* AWS Orange */
+  --accent-hover: #ffad33;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+.glass-panel {
+  background: var(--panel-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
