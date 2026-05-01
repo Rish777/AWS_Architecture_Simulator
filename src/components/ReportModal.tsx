@@ -6,7 +6,7 @@ import {
   X, Download, ShieldCheck, AlertTriangle, DollarSign, Zap, 
   CheckCircle2, Layout, List, BarChart3, TrendingDown 
 } from 'lucide-react';
-import { CLOUD_SERVICES } from '../services';
+import { CLOUD_SERVICES, getEquivalents } from '../services';
 import type { ServiceType } from '../services';
 
 interface ReportModalProps {
@@ -170,7 +170,9 @@ export const ReportModal = ({
 
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(16);
+      doc.setTextColor(13, 17, 30);
       doc.text('3. ARCHITECTURAL AUDIT FINDINGS', 20, currentY);
+
 
       currentY += 10;
       reportData.dynamicFindings.forEach((finding) => {
@@ -188,13 +190,80 @@ export const ReportModal = ({
         if (currentY > 270) { doc.addPage(); currentY = 25; }
       });
 
-      // ── 4. Strategic Recommendations ──
-      if (currentY > 230) { doc.addPage(); currentY = 25; }
-      currentY += 10;
+      // ── 4. Multi-Cloud Cost Optimization Audit ──
+      currentY += 15;
+      if (currentY > 240) { doc.addPage(); currentY = 25; }
+
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(16);
       doc.setTextColor(13, 17, 30);
-      doc.text('4. STRATEGIC RECOMMENDATIONS', 20, currentY);
+      doc.text('4. MULTI-CLOUD COST OPTIMIZATION AUDIT', 20, currentY);
+
+      currentY += 8;
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(100, 100, 100);
+      const auditDesc = 'This audit identifies equivalent services across other cloud providers that offer lower price points for your current architecture.';
+      const splitAuditDesc = doc.splitTextToSize(auditDesc, pageWidth - 40);
+      doc.text(splitAuditDesc, 20, currentY);
+      currentY += (splitAuditDesc.length * 5);
+
+      const comparisonData = nodes.map(node => {
+        const currentSvc = CLOUD_SERVICES[node.data.serviceType as ServiceType];
+        if (!currentSvc) return null;
+        
+        const equivalents = getEquivalents(currentSvc.id);
+        const cheapest = equivalents
+          .filter(e => e.provider !== currentSvc.provider)
+          .sort((a, b) => a.monthlyCost - b.monthlyCost)[0];
+          
+        if (cheapest && cheapest.monthlyCost < currentSvc.monthlyCost) {
+          return [
+            currentSvc.name,
+            `$${currentSvc.monthlyCost.toFixed(2)}`,
+            cheapest.name,
+            cheapest.provider.toUpperCase(),
+            `$${cheapest.monthlyCost.toFixed(2)}`,
+            `$${(currentSvc.monthlyCost - cheapest.monthlyCost).toFixed(2)}`
+          ];
+        }
+        return null;
+      }).filter(Boolean);
+
+      if (comparisonData.length > 0) {
+        autoTable(doc, {
+          startY: currentY + 5,
+          head: [['Current Service', 'Current Cost', 'Cheaper Alternative', 'Provider', 'Alt Cost', 'Monthly Savings']],
+          body: comparisonData as any,
+          theme: 'grid',
+          headStyles: { fillColor: [69, 243, 255], textColor: [13, 17, 30], fontStyle: 'bold' },
+          styles: { fontSize: 8, cellPadding: 3 },
+        });
+        
+        // @ts-ignore
+        currentY = (doc as any).lastAutoTable.finalY + 12;
+        const totalPotentialSavings = comparisonData.reduce((acc, row) => acc + parseFloat((row as any)[5].replace('$', '')), 0);
+        
+        doc.setFillColor(240, 250, 255);
+        doc.rect(20, currentY, pageWidth - 40, 15, 'F');
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(0, 102, 204);
+        doc.text(`STRATEGIC SWITCHING BONUS: Move to Multi-Cloud and save up to $${totalPotentialSavings.toFixed(2)} / month`, 25, currentY + 9);
+        currentY += 22; // Clear the rect and add spacing
+      } else {
+        currentY += 15;
+        doc.setFont('helvetica', 'italic');
+        doc.text('Your current provider choices are already optimized for cost across the cloud market.', 25, currentY);
+        currentY += 12;
+      }
+
+      // ── 5. Strategic Recommendations ──
+      if (currentY > 230) { doc.addPage(); currentY = 25; }
+      currentY += 5;
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(16);
+      doc.setTextColor(13, 17, 30);
+      doc.text('5. STRATEGIC RECOMMENDATIONS', 20, currentY);
 
       const recommendations = [
         'Implement Reserved Instance (RI) strategy for baseline compute loads.',

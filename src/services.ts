@@ -106,4 +106,38 @@ export const CLOUD_SERVICES: Record<ServiceType, CloudService> = {
   snowflake_core: { id: 'snowflake_core', name: 'Snowflake Core', category: 'Warehouse', provider: 'snowflake', monthlyCost: 0, icon: Snowflake, description: '💎 Snowflake Data Cloud.', isSnowflake: true },
 };
 
+// ── COMPARISON ENGINE MAPPING ──────────────────────────────────
+// This hidden mapping allows the comparison engine to identify equivalent 
+// services across providers for the "Shadow Pricing" report section.
+
+export const SERVICE_EQUIVALENTS: Partial<Record<ServiceType, string>> = {
+  // Compute
+  'ec2': 'compute_general', 'azure_vm': 'compute_general', 'compute_engine': 'compute_general',
+  'lambda': 'serverless_compute', 'azure_functions': 'serverless_compute', 'cloud_functions': 'serverless_compute',
+  'eks': 'kubernetes', 'aks': 'kubernetes', 'gke': 'kubernetes',
+  'ecs': 'containers', 'app_service': 'containers', 'cloud_run': 'containers',
+  
+  // Storage & Database
+  's3': 'object_storage', 'blob_storage': 'object_storage', 'gcs': 'object_storage',
+  'rds': 'sql_db', 'azure_sql': 'sql_db', 'cloud_sql': 'sql_db',
+  'dynamodb': 'nosql_db', 'cosmos_db': 'nosql_db', 'firestore': 'nosql_db',
+  
+  // Analytics & Warehouse
+  'redshift': 'data_warehouse', 'synapse': 'data_warehouse', 'bigquery': 'data_warehouse', 'snowflake_core': 'data_warehouse',
+  'glue': 'etl_service', 'adf': 'etl_service', 'dataflow': 'etl_service',
+  
+  // Networking
+  'alb': 'load_balancer', 'azure_lb': 'load_balancer', 'gcp_lb': 'load_balancer',
+  'vpc': 'private_network', 'vnet': 'private_network', 'gcp_vpc': 'private_network',
+  'route53': 'dns_service', 'azure_ad': 'dns_service', 
+};
+
+// Returns a group of equivalent services for a given service ID
+export const getEquivalents = (serviceId: ServiceType): CloudService[] => {
+  const group = SERVICE_EQUIVALENTS[serviceId];
+  if (!group) return [];
+  
+  return Object.values(CLOUD_SERVICES).filter(s => SERVICE_EQUIVALENTS[s.id] === group);
+};
+
 
