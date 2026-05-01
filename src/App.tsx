@@ -325,23 +325,20 @@ function ArchitectureSimulator() {
         onClick={() => setIsCollapsed(!isCollapsed)}
         style={{
           position: 'fixed', 
-          left: isCollapsed ? '0px' : '320px', 
-          top: '50%',
-          transform: 'translate(-50%, -50%)', 
-          zIndex: 100, 
-          background: 'rgba(13, 17, 30, 0.8)',
+          left: isCollapsed ? '1.5rem' : '335px', 
+          top: '1.5rem',
+          zIndex: 150, 
+          background: 'rgba(13, 17, 30, 0.85)',
           backdropFilter: 'blur(12px)',
-          border: '1px solid rgba(255, 255, 255, 0.1)', 
+          border: '1px solid rgba(69, 243, 255, 0.3)', 
           color: '#45f3ff',
-          width: '28px', height: '60px', 
-          borderRadius: '0 8px 8px 0', cursor: 'pointer',
+          width: '40px', height: '40px', 
+          borderRadius: '12px', cursor: 'pointer',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', 
-          boxShadow: '4px 0 15px rgba(0,0,0,0.3)',
-          paddingLeft: '2px'
+          transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)', 
+          boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
         }}
-        onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(69, 243, 255, 0.15)')}
-        onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(13, 17, 30, 0.8)')}
+        title={isCollapsed ? "Expand Library" : "Collapse Library"}
       >
         {isCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
       </button>
@@ -426,23 +423,20 @@ function ArchitectureSimulator() {
         onClick={() => setIsRightCollapsed(!isRightCollapsed)}
         style={{
           position: 'fixed', 
-          right: isRightCollapsed ? '0px' : '320px', 
-          top: '50%',
-          transform: 'translate(50%, -50%)', 
-          zIndex: 100, 
-          background: 'rgba(13, 17, 30, 0.8)',
+          right: isRightCollapsed ? '1.5rem' : '335px', 
+          top: '1.5rem',
+          zIndex: 150, 
+          background: 'rgba(13, 17, 30, 0.85)',
           backdropFilter: 'blur(12px)',
-          border: '1px solid rgba(255, 255, 255, 0.1)', 
+          border: '1px solid rgba(255, 153, 0, 0.3)', 
           color: '#ff9900',
-          width: '28px', height: '60px', 
-          borderRadius: '8px 0 0 8px', cursor: 'pointer',
+          width: '40px', height: '40px', 
+          borderRadius: '12px', cursor: 'pointer',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', 
-          boxShadow: '-4px 0 15px rgba(0,0,0,0.3)',
-          paddingRight: '2px'
+          transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)', 
+          boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
         }}
-        onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255, 153, 0, 0.15)')}
-        onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(13, 17, 30, 0.8)')}
+        title={isRightCollapsed ? "Expand Details" : "Collapse Details"}
       >
         {isRightCollapsed ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
       </button>
