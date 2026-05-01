@@ -249,13 +249,22 @@ export const ReportModal = ({
         doc.setFont('helvetica', 'bold');
         doc.setTextColor(0, 102, 204);
         doc.text(`STRATEGIC SWITCHING BONUS: Move to Multi-Cloud and save up to $${totalPotentialSavings.toFixed(2)} / month`, 25, currentY + 9);
-        currentY += 22; // Clear the rect and add spacing
+        currentY += 20;
       } else {
         currentY += 15;
         doc.setFont('helvetica', 'italic');
         doc.text('Your current provider choices are already optimized for cost across the cloud market.', 25, currentY);
-        currentY += 12;
+        currentY += 15;
       }
+
+      // Always show the strategic disclaimer for Section 4
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'italic');
+      doc.setTextColor(120, 120, 120);
+      const disclaimer = 'Note: These savings represent service-level benchmarks. Implementing a hybrid or multi-cloud strategy may introduce additional Data Egress costs and networking complexity that should be evaluated during a full migration assessment.';
+      const splitDisclaimer = doc.splitTextToSize(disclaimer, pageWidth - 45);
+      doc.text(splitDisclaimer, 25, currentY);
+      currentY += (splitDisclaimer.length * 4) + 12;
 
       // ── 5. Strategic Recommendations ──
       if (currentY > 230) { doc.addPage(); currentY = 25; }
