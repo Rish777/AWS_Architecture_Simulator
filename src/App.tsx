@@ -303,16 +303,44 @@ function ArchitectureSimulator() {
 
   return (
     <div className="app-wrapper" style={{ overflow: 'hidden', width: '100vw', height: '100vh', position: 'relative' }}>
-      <Sidebar 
-        onAddNode={addNode}
-        onAutoGenerate={handleAutoGenerate}
-        onClear={clearCanvas}
-        explanation={explanation}
-        showExplanation={showExplanation}
-        setShowExplanation={setShowExplanation}
-        isInsightMinimized={isInsightMinimized}
-        setIsInsightMinimized={setIsInsightMinimized}
-      />
+      <motion.div
+        initial={false}
+        animate={{ width: isCollapsed ? '0px' : '320px' }}
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+        style={{ height: '100vh', zIndex: 30, overflow: 'hidden', position: 'relative' }}
+      >
+        <Sidebar 
+          onAddNode={addNode}
+          onAutoGenerate={handleAutoGenerate}
+          onClear={clearCanvas}
+          explanation={explanation}
+          showExplanation={showExplanation}
+          setShowExplanation={setShowExplanation}
+          isInsightMinimized={isInsightMinimized}
+          setIsInsightMinimized={setIsInsightMinimized}
+        />
+      </motion.div>
+
+      <button
+        onClick={() => setIsCollapsed(!isCollapsed)}
+        style={{
+          position: 'fixed', 
+          left: isCollapsed ? '0px' : '320px', 
+          top: '50%',
+          transform: 'translate(-50%, -50%)', 
+          zIndex: 100, 
+          background: '#0d111e',
+          border: '1px solid rgba(255,255,255,0.1)', 
+          color: 'white',
+          width: '32px', height: '32px', borderRadius: '0 50% 50% 0', cursor: 'pointer',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', 
+          boxShadow: '4px 0 12px rgba(0,0,0,0.5)',
+          paddingLeft: '4px'
+        }}
+      >
+        {isCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
+      </button>
 
       {/* Architect's Insight - Side Pop-up (Scrollable Drawer) */}
       <AnimatePresence>
