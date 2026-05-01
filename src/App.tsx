@@ -393,12 +393,19 @@ function ArchitectureSimulator() {
       <button
         onClick={() => setIsRightCollapsed(!isRightCollapsed)}
         style={{
-          position: 'fixed', right: isRightCollapsed ? '10px' : '305px', top: '50%',
-          transform: 'translateY(-50%)', zIndex: 100, background: '#0d111e',
-          border: '1px solid rgba(255,255,255,0.1)', color: 'white',
-          width: '32px', height: '32px', borderRadius: '50%', cursor: 'pointer',
+          position: 'fixed', 
+          right: isRightCollapsed ? '0px' : '320px', 
+          top: '50%',
+          transform: 'translate(50%, -50%)', 
+          zIndex: 100, 
+          background: '#0d111e',
+          border: '1px solid rgba(255,255,255,0.1)', 
+          color: 'white',
+          width: '32px', height: '32px', borderRadius: '50% 0 0 50%', cursor: 'pointer',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', boxShadow: '0 4px 12px rgba(0,0,0,0.5)'
+          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', 
+          boxShadow: '-4px 0 12px rgba(0,0,0,0.5)',
+          paddingRight: '4px'
         }}
       >
         {isRightCollapsed ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
